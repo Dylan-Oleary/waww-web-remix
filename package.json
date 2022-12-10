@@ -14,7 +14,7 @@
     "typecheck": "tsc -b",
     "-- GIT HOOK SCRIPTS --": "",
     "husky:commit-msg": "npx --no -- commitlint --edit ${1}",
-    "husky:pre-commit": "yarn prettier:fix && yarn check:code",
+    "husky:pre-commit": "yarn check:code",
     "husky:pre-push": "yarn build",
     "prepare": "husky install"
   },
