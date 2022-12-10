@@ -2,9 +2,10 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "-- BOOT SCRIPTS --": "",
+    "build": "yarn tw:build && remix build",
     "build:clean": "rm -rf ./.cache ./build",
-    "dev": "remix dev",
+    "dev": "concurrently -n Tailwind,Remix -c cyan,yellow \"yarn tw:watch\" \"remix dev\"",
     "start": "remix-serve build",
     "-- CODE QUALITY SCRIPTS --": "",
     "check:code": "concurrently -n ESLint,Prettier -c green,yellow \"yarn lint\" \"yarn prettier\"",
@@ -16,7 +17,10 @@
     "husky:commit-msg": "npx --no -- commitlint --edit ${1}",
     "husky:pre-commit": "yarn check:code",
     "husky:pre-push": "yarn build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "-- TAILWIND SCRIPTS --": "",
+    "tw:build": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
+    "tw:watch": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css"
   },
   "dependencies": {
     "@remix-run/node": "^1.8.2",
@@ -35,11 +39,14 @@
     "@theonlydevsever/prettier": "^1.0.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "autoprefixer": "^10.4.13",
     "concurrently": "^7.6.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.0",
+    "postcss": "^8.4.19",
     "prettier": "^2.8.1",
+    "tailwindcss": "^3.2.4",
     "typescript": "^4.8.4"
   },
   "engines": {
