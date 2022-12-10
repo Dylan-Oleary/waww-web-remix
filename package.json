@@ -1,0 +1,48 @@
+{
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "remix build",
+    "build:clean": "rm -rf ./.cache ./build",
+    "dev": "remix dev",
+    "start": "remix-serve build",
+    "-- CODE QUALITY SCRIPTS --": "",
+    "check:code": "concurrently -n ESLint,Prettier -c green,yellow \"yarn lint\" \"yarn prettier\"",
+    "lint": "eslint  && echo \"\n\nLint Complete - S'all Good Man!\n\n\"",
+    "prettier": "prettier --check \"./app/*\"",
+    "prettier:fix": "prettier --write \"./app/*\"",
+    "typecheck": "tsc -b",
+    "-- GIT HOOK SCRIPTS --": "",
+    "husky:commit-msg": "npx --no -- commitlint --edit ${1}",
+    "husky:pre-commit": "yarn prettier:fix && yarn check:code",
+    "husky:pre-push": "yarn build",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@remix-run/node": "^1.8.2",
+    "@remix-run/react": "^1.8.2",
+    "@remix-run/serve": "^1.8.2",
+    "isbot": "^3.6.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@remix-run/dev": "^1.8.2",
+    "@remix-run/eslint-config": "^1.8.2",
+    "@theonlydevsever/eslint-config": "^1.0.2",
+    "@theonlydevsever/prettier": "^1.0.0",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.0",
+    "prettier": "^2.8.1",
+    "typescript": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

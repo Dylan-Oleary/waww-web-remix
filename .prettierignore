@@ -1,0 +1,10 @@
+node_modules
+public
+coverage
+*.DS_Store
+*.d.ts
+
+.env
+/.cache
+/build
+/public/build

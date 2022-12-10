@@ -1,0 +1,9 @@
+node_modules
+
+/build
+/coverage
+/public
+/prettier.config.js
+
+*.log
+*.lock
