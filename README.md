@@ -1,13 +1,58 @@
-# Welcome to Remix!
+# What Are We Watching?!
 
--   [Remix Docs](https://remix.run/docs)
+Generates random movies based on selected filters because I'm sick of spending 8 years figuring out what to watch.
+
+![](https://res.cloudinary.com/dhgpgb0yw/image/upload/v1670716125/waww/WAWW-pink_hlpfx9.png)
+
+Movie data is provided by [TMDB](https://www.themoviedb.org/?language=en-CA).
+
+Helpful resources
+
+-   [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction)
+-   [Remix](https://remix.run/)
+-   [TailwindCSS](https://tailwindcss.com/)
+
+## Getting Started
+
+This project uses Node.js `v18.12.1`
+
+```sh
+nvm use 18.12.1
+```
+
+### Install the project dependencies
+
+```sh
+// Using npm
+npm install
+
+// Using yarn
+yarn
+```
+
+### Setup environment variables
+
+```sh
+touch .env
+```
+
+Inside of the newly generated `.env` file, add the following
+
+```sh
+TMDB_API_KEY=<PRIVATE>
+TMDB_V3_URL=https://api.themoviedb.org/3
+```
+
+You will need to generate your own API key from TMDB in order to access their API and set as the value of `TMDB_API_KEY`.
 
 ## Development
 
-From your terminal:
-
 ```sh
+// Using npm
 npm run dev
+
+// Using yarn
+yarn dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
@@ -17,37 +62,19 @@ This starts your app in development mode, rebuilding assets on file changes.
 First, build your app for production:
 
 ```sh
+// Using npm
 npm run build
+
+// Using yarn
+yarn build
 ```
 
 Then run the app in production mode:
 
 ```sh
-npm start
-```
+// Using npm
+npm run start
 
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
--   `build/`
--   `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
+// Using yarn
+yarn start
 ```
