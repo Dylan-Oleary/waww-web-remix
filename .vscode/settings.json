@@ -1,5 +1,7 @@
 {
+  "css.lint.propertyIgnoredDueToDisplay": "ignore",
   "css.lint.unknownAtRules": "ignore",
+  "css.lint.vendorPrefix": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,

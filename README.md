@@ -11,6 +11,7 @@ Helpful resources
 -   [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction)
 -   [Remix](https://remix.run/)
 -   [TailwindCSS](https://tailwindcss.com/)
+-   [Trello Board](https://trello.com/b/mXjRX7bN/waww)
 
 ## Getting Started
 
@@ -40,7 +41,7 @@ Inside of the newly generated `.env` file, add the following
 
 ```sh
 TMDB_API_KEY=<PRIVATE>
-TMDB_V3_URL=https://api.themoviedb.org/3
+TMDB_V3_API_URL=https://api.themoviedb.org/3
 ```
 
 You will need to generate your own API key from TMDB in order to access their API and set as the value of `TMDB_API_KEY`.
