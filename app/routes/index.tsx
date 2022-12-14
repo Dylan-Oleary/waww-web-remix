@@ -1,17 +1,16 @@
-import { Outlet } from "@remix-run/react";
-
-import { Footer, Navigation } from "@/components";
+import Logo from "@/assets/images/dark-logo.png";
 
 export default function Index() {
     return (
-        <div className="min-h-full flex flex-col bg-white">
-            <Navigation />
-            <main className="flex-grow">
-                <div className="-mt-24 px-6">
-                    <Outlet />
-                </div>
-            </main>
-            <Footer />
+        <div className="min-h-full flex flex-col bg-primary-blue justify-center items-center">
+            <img
+                className="max-h-48 w-auto block ,b-8"
+                src={Logo}
+                alt="Logo for What Are We Watching"
+            />
+            <a href="/watch" className="text-white">
+                Get Watching
+            </a>
         </div>
     );
 }
