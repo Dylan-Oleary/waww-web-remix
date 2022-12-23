@@ -8,5 +8,4 @@ export const TmdbStatusEnumSchema = z.enum([
     "Released",
     "Canceled"
 ]);
-
 export type TmdbStatusEnum = z.infer<typeof TmdbStatusEnumSchema>;

@@ -29,7 +29,7 @@ export const TmdbMovieSchema = z.object({
     poster_path: z.string().nullable(),
     production_companies: z.array(TmdbProductionCompanySchema),
     production_countries: z.array(TmdbProductionCountrySchema),
-    release_date: z.date(),
+    release_date: z.string(),
     spoken_languages: z.array(TmdbSpokenLanguageSchema),
     status: TmdbStatusEnumSchema,
     tagline: z.string().nullable(),
@@ -38,5 +38,4 @@ export const TmdbMovieSchema = z.object({
     vote_average: z.number(),
     vote_count: z.number()
 });
-
 export type TmdbMovie = z.infer<typeof TmdbMovieSchema>;

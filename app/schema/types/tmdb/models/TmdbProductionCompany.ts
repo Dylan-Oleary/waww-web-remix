@@ -6,5 +6,4 @@ export const TmdbProductionCompanySchema = z.object({
     logo_path: z.string().nullable(),
     origin_country: z.string()
 });
-
 export type TmdbProductionCompany = z.infer<typeof TmdbProductionCompanySchema>;

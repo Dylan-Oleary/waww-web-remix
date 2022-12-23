@@ -24,5 +24,4 @@ export const TmdbCollectionSchema = z.object({
         })
     )
 });
-
 export type TmdbCollection = z.infer<typeof TmdbCollectionSchema>;
