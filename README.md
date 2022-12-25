@@ -10,7 +10,7 @@ Helpful resources
 
 -   [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction)
 -   [Remix](https://remix.run/)
--   [TailwindCSS](https://tailwindcss.com/)
+-   [Maintine UI](https://mantine.dev/)
 -   [Trello Board](https://trello.com/b/mXjRX7bN/waww)
 
 ## Getting Started

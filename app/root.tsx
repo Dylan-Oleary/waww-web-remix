@@ -1,10 +1,11 @@
+import { MantineProvider, createEmotionCache } from "@mantine/core";
+import { StylesPlaceholder } from "@mantine/remix";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
-import appStyles from "@/styles/app.css";
+import { MainLayout } from "@/layouts";
+import { theme } from "@/styles/theme";
 
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: appStyles }];
+import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
@@ -12,19 +13,26 @@ export const meta: MetaFunction = () => ({
     viewport: "width=device-width,initial-scale=1"
 });
 
+createEmotionCache({ key: "mantine" });
+
 export default function App() {
     return (
-        <html lang="en">
-            <head>
-                <Meta />
-                <Links />
-            </head>
-            <body>
-                <Outlet />
-                <ScrollRestoration />
-                <Scripts />
-                <LiveReload />
-            </body>
-        </html>
+        <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+            <html lang="en">
+                <head>
+                    <StylesPlaceholder />
+                    <Meta />
+                    <Links />
+                </head>
+                <body>
+                    <MainLayout>
+                        <Outlet />
+                    </MainLayout>
+                    <ScrollRestoration />
+                    <Scripts />
+                    <LiveReload />
+                </body>
+            </html>
+        </MantineProvider>
     );
 }

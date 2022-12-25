@@ -9,3 +9,8 @@ export const convertObjectToUrlSearchParams = (obj: Record<string, unknown>): UR
 
     return new URLSearchParams(cleanObj);
 };
+
+export const convertUrlParamsToJSON = <T extends Record<string, unknown>>(
+    url: string
+): Record<keyof T, string> =>
+    Object.fromEntries<keyof T>(new URL(url).searchParams) as Record<keyof T, string>;
