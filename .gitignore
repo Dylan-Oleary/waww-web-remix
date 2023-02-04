@@ -1,8 +1,12 @@
 coverage
 node_modules
 
-/.cache
+.cache
+.env
+.vercel
+.output
+
+/api/index.js
+/api/index.js.map
 /build
 /public/build
-
-.env
