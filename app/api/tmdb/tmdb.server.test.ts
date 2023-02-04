@@ -116,7 +116,7 @@ describe("tmdbApi", () => {
         });
 
         it("throws an error if parameter validation fails", async () => {
-            const args: TmdbDiscoverMoviesArgs = { page: 5000 };
+            const args: TmdbDiscoverMoviesArgs = { page: 5000000 };
             await tmdbApi.discoverMovies(args).catch((error) => {
                 expect(error).toBeDefined();
             });

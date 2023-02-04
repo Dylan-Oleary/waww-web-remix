@@ -3,6 +3,15 @@ import {
     TmdbDiscoverMoviesParamsSchema,
     TmdbDiscoverMoviesResponse,
     TmdbDiscoverMoviesResultRecord,
+    TmdbGetCertificationArgs,
+    TmdbGetCertificationArgsSchema,
+    TmdbGetGenresArgs,
+    TmdbGetGenresArgsSchema,
+    TmdbGetGenresResponse,
+    TmdbGetWatchProvidersArgs,
+    TmdbGetWatchProvidersArgsSchema,
+    TmdbGetWatchProvidersResponse,
+    TmdbMediumEnum,
     TmdbMovie,
     TmdbRandomMovieArgs,
     TmdbRandomMovieArgsSchema,
@@ -18,22 +27,14 @@ import {
     shuffleArray
 } from "@/utils";
 
+import { tmdbCertificationData, tmdbGenreData, tmdbWatchProviderData } from "./stub.server";
+import { TmdbCertification } from "../../schema/types/tmdb/models/TmdbCertification";
 const API_KEY = process?.env?.TMDB_API_KEY;
+const BASE_ASSET_URL = process?.env?.TMDB_BASE_ASSET_URL;
 const BASE_URL = process?.env?.TMDB_V3_API_URL;
 const BASE_URL_PARAMS = { api_key: API_KEY ?? "" };
 
 export const tmdbApi = {
-    /**
-     * Fetches a movie details by its id
-     *
-     * @param id The id used to lookup the movie
-     * @see https://developers.themoviedb.org/3/movies/get-movie-details
-     */
-    async getMovieById(id: string): Promise<TmdbMovie> {
-        return fetch(`${BASE_URL}/movie/${id}?${new URLSearchParams(BASE_URL_PARAMS)}`).then(
-            (res) => res.json()
-        );
-    },
     /**
      * Fetches movies based off of passed filter params
      *
@@ -49,6 +50,75 @@ export const tmdbApi = {
         return fetch(
             `${BASE_URL}/discover/movie?${convertObjectToUrlSearchParams(mergedParams)}`
         ).then((res) => res.json());
+    },
+    /**
+     * Fetches a list of media certifications based fo the passed country
+     *
+     * @param params Parameters to fetch the desired certifications
+     * @param medium The medium of the content
+     * @see https://developers.themoviedb.org/3/certifications/get-movie-certifications
+     * @see https://developers.themoviedb.org/3/certifications/get-tv-certifications
+     */
+    async getCertifications(
+        params: TmdbGetCertificationArgs,
+        medium: TmdbMediumEnum = "movie",
+        options: { sortBy?: "asc" | "desc" } = {}
+    ): Promise<TmdbCertification[]> {
+        const validatedParams = TmdbGetCertificationArgsSchema.parse(params);
+        const { sortBy = "asc" } = options;
+
+        return new Promise((resolve) =>
+            resolve(
+                tmdbCertificationData[validatedParams.country].sort((a, b) =>
+                    sortBy === "asc" ? a.order - b.order : b.order - a.order
+                )
+            )
+        );
+        // TODO - Enable API fetch
+        // return fetch(
+        //     `${BASE_URL}/certification/${medium}/list?${new URLSearchParams(BASE_URL_PARAMS)}`
+        // )
+        //     .then((res) => res.json())
+        //     .then(({ certifications = {} }) =>
+        //         (certifications[validatedParams?.country] ?? []).sort((a, b) =>
+        //             sortBy === "asc" ? a.order - b.order : b.order - a.order
+        //         )
+        //     );
+    },
+    /**
+     * Fetches a list of all genres present in the TMDB system
+     *
+     * @param params Parameters to fetch the desired genres
+     * @param medium The medium of the content
+     * @see https://developers.themoviedb.org/3/genres/get-tv-list
+     * @see https://developers.themoviedb.org/3/genres/get-movie-list
+     */
+    async getGenres(
+        params?: TmdbGetGenresArgs,
+        medium: TmdbMediumEnum = "movie"
+    ): Promise<TmdbGetGenresResponse> {
+        const mergedParams = withTmdbApiKey(TmdbGetGenresArgsSchema).parse({
+            ...BASE_URL_PARAMS,
+            ...params
+        });
+
+        return new Promise((resolve) => resolve(tmdbGenreData));
+
+        //TODO - Enable API fetch
+        // return fetch(
+        //     `${BASE_URL}/genre/${medium}/list?${convertObjectToUrlSearchParams(mergedParams)}`
+        // ).then((res) => res.json());
+    },
+    /**
+     * Fetches a movie details by its id
+     *
+     * @param id The id used to lookup the movie
+     * @see https://developers.themoviedb.org/3/movies/get-movie-details
+     */
+    async getMovieById(id: string): Promise<TmdbMovie> {
+        return fetch(`${BASE_URL}/movie/${id}?${new URLSearchParams(BASE_URL_PARAMS)}`).then(
+            (res) => res.json()
+        );
     },
     /**
      * Fetches a random list of movies based on the passed filter params
@@ -83,5 +153,40 @@ export const tmdbApi = {
                 validRandomMovieArgs.number_of_items
             )
         };
+    },
+    /**
+     * Fetches a list of watch (streaming/purchase/rent) providers
+     *
+     * @param params Parameters to filter providers by
+     * @param medium The medium of the content
+     * @see https://developers.themoviedb.org/3/watch-providers/get-movie-providers
+     * @see https://developers.themoviedb.org/3/watch-providers/get-tv-providers
+     */
+    async getWatchProviders(
+        params?: TmdbGetWatchProvidersArgs,
+        medium: TmdbMediumEnum = "movie"
+    ): Promise<TmdbGetWatchProvidersResponse> {
+        const mergedParams = withTmdbApiKey(TmdbGetWatchProvidersArgsSchema).parse({
+            ...BASE_URL_PARAMS,
+            ...params
+        });
+
+        return new Promise((resolve) => resolve(tmdbWatchProviderData));
+
+        //TODO - Enable API fetch
+        // const { results = [] }: TmdbGetWatchProvidersResponse = await fetch(
+        //     `${BASE_URL}/watch/providers/${medium}?${convertObjectToUrlSearchParams(mergedParams)}`
+        // ).then((res) => res.json());
+
+        // return {
+        //     results: results
+        //         .sort((a, b) => a.provider_name.localeCompare(b.provider_name))
+        //         .map(({ display_priority, logo_path, provider_id, provider_name }) => ({
+        //             display_priority,
+        //             logo_path: `${BASE_ASSET_URL}${logo_path}`,
+        //             provider_id,
+        //             provider_name
+        //         }))
+        // };
     }
 };

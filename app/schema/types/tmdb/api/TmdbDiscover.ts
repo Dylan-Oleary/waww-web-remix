@@ -3,7 +3,23 @@ import { z } from "zod";
 import { LanguageCodeSchema } from "@/schema/types/localization/language";
 import { ISO_3166_1_Schema } from "@/schema/types/localization/region";
 import { TmdbSortByEnumSchema } from "@/schema/types/tmdb/api/TmdbSortBy";
+import { TmdbCertificationCountryEnumSchema } from "@/schema/types/tmdb/models/TmdbCertification";
 import { TmdbMovieSchema } from "@/schema/types/tmdb/models/TmdbMovie";
+
+export const StringWithIDComma = z
+    .string()
+    .min(1)
+    .regex(/^\d+(,\d+)*$/);
+
+export const StringWithIDPipe = z
+    .string()
+    .min(1)
+    .regex(/^\d+(\|\d+)*$/);
+
+export const StringWithPipe = z
+    .string()
+    .min(1)
+    .regex(/^.+(\|.+)*$/);
 
 /**
  * Discover API query parameter schema
@@ -11,6 +27,8 @@ import { TmdbMovieSchema } from "@/schema/types/tmdb/models/TmdbMovie";
  * @see https://developers.themoviedb.org/3/discover/movie-discover
  */
 export const TmdbDiscoverMoviesParamsSchema = z.object({
+    certification: StringWithPipe.optional(),
+    certification_country: TmdbCertificationCountryEnumSchema.optional(),
     include_adult: z.boolean().optional().default(false),
     include_video: z.boolean().optional().default(false),
     language: LanguageCodeSchema.default("en-US"),
@@ -21,50 +39,23 @@ export const TmdbDiscoverMoviesParamsSchema = z.object({
     region: ISO_3166_1_Schema.optional(),
     ["release_date.gte"]: z.string().optional(),
     ["release_date.lte"]: z.string().optional(),
-    sort_by: TmdbSortByEnumSchema.default(TmdbSortByEnumSchema.Enum["popularity.desc"]),
+    sort_by: TmdbSortByEnumSchema.default(TmdbSortByEnumSchema.Enum["vote_count.desc"]),
     ["vote_average.gte"]: z.number().min(0).optional(),
     ["vote_average.lte"]: z.number().min(0).optional(),
     ["vote_count.gte"]: z.number().min(0).optional(),
     ["vote_count.lte"]: z.number().min(1).optional(),
     watch_region: ISO_3166_1_Schema.optional(),
-    with_cast: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    with_companies: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    with_crew: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    with_genres: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    with_keywords: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    with_people: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
+    with_cast: StringWithIDComma.optional(),
+    with_companies: StringWithIDComma.optional(),
+    with_crew: StringWithIDComma.optional(),
+    with_genres: StringWithIDPipe.optional(),
+    with_keywords: StringWithIDComma.optional(),
+    with_people: StringWithIDComma.optional(),
     ["with_runtime.gte"]: z.number().nonnegative().optional(),
     ["with_runtime.lte"]: z.number().nonnegative().optional(),
-    with_watch_providers: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    without_genres: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
-    without_keywords: z
-        .array(z.string())
-        .transform((values) => values.map((value) => value?.trim()).join(","))
-        .optional(),
+    with_watch_providers: StringWithIDPipe.optional(),
+    without_genres: StringWithIDPipe.optional(),
+    without_keywords: StringWithIDPipe.optional(),
     year: z.number().min(1000).max(2999).optional()
 });
 
