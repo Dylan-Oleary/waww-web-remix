@@ -14,6 +14,9 @@ export const MultiSelectValue: FC<MultiSelectProps> = ({
     imageProps,
     label,
     onRemove,
+    // Ignore classNames and styles
+    classNames,
+    styles,
     ...rest
 }) => {
     const { classes, cx } = useMultiSelectValueStyles();

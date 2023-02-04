@@ -32,7 +32,7 @@ export const MediaGrid: FC<MediaGridProps> = ({
     return (
         <Grid gutter="md" {...rest}>
             {data?.map((media) => (
-                <Grid.Col key={media.id} span={12} sm={4} lg={3}>
+                <Grid.Col key={media.id} span={12} sm={3}>
                     <MediaGridCard className={classes.card} data={media} withRating />
                 </Grid.Col>
             ))}
