@@ -25,13 +25,15 @@ export default function App() {
                     <Links />
                 </head>
                 <body>
-                    <MainLayout>
-                        <Outlet />
-                    </MainLayout>
-                    <CustomFonts />
-                    <ScrollRestoration />
-                    <Scripts />
-                    <LiveReload />
+                    <div id="root">
+                        <MainLayout>
+                            <Outlet />
+                        </MainLayout>
+                        <CustomFonts />
+                        <ScrollRestoration />
+                        <Scripts />
+                        <LiveReload />
+                    </div>
                 </body>
             </html>
         </MantineProvider>

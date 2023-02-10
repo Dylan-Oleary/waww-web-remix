@@ -10,7 +10,7 @@ function hydrateDOM() {
                 <RemixBrowser />
             </ClientProvider>
         </StrictMode>,
-        document
+        document.getElementById("root")
     );
 }
 
