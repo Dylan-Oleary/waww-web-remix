@@ -1,4 +1,4 @@
-import { MantineProvider, createEmotionCache } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
@@ -13,27 +13,23 @@ export const meta: MetaFunction = () => ({
     viewport: "width=device-width,initial-scale=1"
 });
 
-createEmotionCache({ key: "mantine" });
-
 export default function App() {
     return (
         <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
             <html lang="en">
                 <head>
-                    <StylesPlaceholder />
                     <Meta />
                     <Links />
+                    <StylesPlaceholder />
                 </head>
                 <body>
-                    <div id="root">
-                        <MainLayout>
-                            <Outlet />
-                        </MainLayout>
-                        <CustomFonts />
-                        <ScrollRestoration />
-                        <Scripts />
-                        <LiveReload />
-                    </div>
+                    <MainLayout>
+                        <Outlet />
+                    </MainLayout>
+                    <CustomFonts />
+                    <ScrollRestoration />
+                    <Scripts />
+                    <LiveReload />
                 </body>
             </html>
         </MantineProvider>

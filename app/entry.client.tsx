@@ -1,13 +1,15 @@
+import { createEmotionCache } from "@mantine/core";
 import { ClientProvider } from "@mantine/remix";
 import { RemixBrowser } from "@remix-run/react";
 import { startTransition, StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 
+createEmotionCache({ key: "mantine" });
+
 function hydrate() {
     startTransition(() => {
         hydrateRoot(
-            //@ts-ignore
-            document.getElementById("root"),
+            document,
             <StrictMode>
                 <ClientProvider>
                     <RemixBrowser />
