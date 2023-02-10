@@ -33,6 +33,8 @@ export const theme: MantineThemeOverride = {
             "#010e17"
         ]
     },
+    fontFamily: "Poppins, sans-serif",
+    headings: { fontFamily: "Poppins, sans-serif" },
     primaryColor: "primary",
     white: "#F6F4F3",
     globalStyles: (theme) => ({

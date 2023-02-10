@@ -3,7 +3,7 @@ import { StylesPlaceholder } from "@mantine/remix";
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import { MainLayout } from "@/layouts";
-import { theme } from "@/styles/theme";
+import { CustomFonts, theme } from "@/styles";
 
 import type { MetaFunction } from "@remix-run/node";
 
@@ -28,6 +28,7 @@ export default function App() {
                     <MainLayout>
                         <Outlet />
                     </MainLayout>
+                    <CustomFonts />
                     <ScrollRestoration />
                     <Scripts />
                     <LiveReload />
