@@ -22,38 +22,38 @@ export const MediaGridCard: FC<MediaGridCardProps> = ({ data, withRating = false
     const recordPageLink = `/movies/${id}`;
 
     return (
-        <Card childContainerClassName={classes.card} {...rest}>
-            <Link className={classes.anchor} to={recordPageLink}>
-                <AspectRatio className={classes.poster} ratio={2 / 3}>
-                    <Image
-                        alt={`Poster for ${title}`}
-                        // TODO: Build image links on server
-                        // https://developers.themoviedb.org/3/getting-started/images
-                        src={`https://image.tmdb.org/t/p/w200${poster_path}`}
-                    />
-                </AspectRatio>
-                {withRating ? (
-                    <MediaScoreProgress
-                        className={classes.mediaScoreProgress}
-                        score={vote_average}
-                    />
-                ) : null}
-            </Link>
-            <div className={classes.infoContainer}>
-                <Text className={classes.titleText} component="h2" lineClamp={2}>
-                    <Link className={classes.titleLink} to={recordPageLink}>
+        <Link className={classes.anchor} to={recordPageLink}>
+            <Card childContainerClassName={classes.card} {...rest}>
+                <div className={classes.posterContainer}>
+                    <AspectRatio className={classes.poster} ratio={2 / 3}>
+                        <Image
+                            alt={`Poster for ${title}`}
+                            // TODO: Build image links on server
+                            // https://developers.themoviedb.org/3/getting-started/images
+                            src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+                        />
+                    </AspectRatio>
+                    {withRating ? (
+                        <MediaScoreProgress
+                            className={classes.mediaScoreProgress}
+                            score={vote_average}
+                        />
+                    ) : null}
+                </div>
+                <div className={classes.infoContainer}>
+                    <Text className={classes.titleText} component="h2" lineClamp={2}>
                         {title}
-                    </Link>
-                </Text>
-                <Text className={classes.releaseDate} component="p">
-                    {dayjs(release_date).format(DayJsDateFormatEnumSchema.Enum["MMM DD, YYYY"])}
-                </Text>
-                {!!overview ? (
-                    <Text className={classes.overviewText} component="p">
-                        {overview}
                     </Text>
-                ) : null}
-            </div>
-        </Card>
+                    <Text className={classes.releaseDate} component="p">
+                        {dayjs(release_date).format(DayJsDateFormatEnumSchema.Enum["MMM DD, YYYY"])}
+                    </Text>
+                    {!!overview ? (
+                        <Text className={classes.overviewText} component="p">
+                            {overview}
+                        </Text>
+                    ) : null}
+                </div>
+            </Card>
+        </Link>
     );
 };

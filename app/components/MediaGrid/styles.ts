@@ -8,10 +8,10 @@ export const useMediaGridStyles = createStyles(() => ({
 
 export const useMediaGridCardStyles = createStyles((theme) => ({
     anchor: {
-        position: "relative",
-        width: "35%",
-        [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
-            width: "100%"
+        color: "inherit",
+        textDecoration: "none",
+        "&:visited": {
+            color: "inherit"
         }
     },
     card: {
@@ -61,17 +61,17 @@ export const useMediaGridCardStyles = createStyles((theme) => ({
     poster: {
         height: "100%"
     },
+    posterContainer: {
+        position: "relative",
+        width: "35%",
+        [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
+            width: "100%"
+        }
+    },
     releaseDate: {
         color: theme.colors.gray[5],
         fontSize: theme.fontSizes.xs,
         margin: 0
-    },
-    titleLink: {
-        color: "inherit",
-        textDecoration: "none",
-        "&:visited": {
-            color: "inherit"
-        }
     },
     titleText: {
         color: theme.colors.gray[7],
