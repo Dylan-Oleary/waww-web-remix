@@ -5,10 +5,8 @@ import { z } from "zod";
 import { tmdbApi } from "@/api";
 import { TmdbMovie } from "@/schema";
 
-// import { mockMovie } from "jest/mockData/tmdb";
-
 import type { LoaderFunction } from "@remix-run/node";
-import { mockMovie } from "jest/mockData/tmdb";
+import { mockMovieExtended } from "jest/mockData/tmdb";
 
 export type SingleMovieRouteLoaderData = {
     movie: TmdbMovie;
@@ -20,18 +18,22 @@ export type SingleMovieRouteLoaderData = {
 };
 
 export const singleMovieRouteLoader: LoaderFunction = async ({ params }) => {
-    const { id } = params;
-    // TODO const movie = await tmdbApi.getMovieById(z.string().min(1).parse(id));
+    // const { id } = params;
+    // const movie = await tmdbApi.getMovieById(String(id), {
+    //     append_to_response: "credits,recommendations,videos"
+    // });
 
-    // console.log(movie);
+    //TODO - Filter trailer
+    //TODO - Get Director / Producer / Top Cast
+    //TODO - Recommendations Filtered
 
     const { value } = await getAverageColor(
-        `https://image.tmdb.org/t/p/w200${mockMovie.poster_path}`
+        `https://image.tmdb.org/t/p/w200${mockMovieExtended.poster_path}`
     );
     const [red, green, blue] = value;
 
     return json<SingleMovieRouteLoaderData>({
-        movie: mockMovie,
+        movie: mockMovieExtended,
         posterPrimaryColor: { red, green, blue }
     });
 };

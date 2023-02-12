@@ -1,7 +1,10 @@
 import { z } from "zod";
 
+import { TmdbCastMemberSchema } from "./TmdbCastMember";
 import { TmdbCollectionSchema } from "./TmdbCollection";
+import { TmdbCrewMemberSchema } from "./TmdbCrewMember";
 import { TmdbGenreSchema } from "./TmdbGenre";
+import { TmdbMediaVideoSchema } from "./TmdbMediaVideo";
 import { TmdbProductionCompanySchema } from "./TmdbProductionCompany";
 import { TmdbProductionCountrySchema } from "./TmdbProductionCountry";
 import { TmdbSpokenLanguageSchema } from "./TmdbSpokenLanguage";
@@ -38,4 +41,41 @@ export const TmdbMovieSchema = z.object({
     vote_average: z.number(),
     vote_count: z.number()
 });
+export const TmdbMovieExtendedSchema = TmdbMovieSchema.extend({
+    credits: z
+        .object({
+            cast: z.array(TmdbCastMemberSchema).optional(),
+            crew: z.array(TmdbCrewMemberSchema).optional()
+        })
+        .optional(),
+    recommendations: z
+        .object({
+            page: z.number().nonnegative().optional(),
+            results: z
+                .array(
+                    TmdbMovieSchema.pick({
+                        id: true,
+                        adult: true,
+                        backdrop_path: true,
+                        title: true,
+                        original_language: true,
+                        original_title: true,
+                        overview: true,
+                        poster_path: true,
+                        popularity: true,
+                        release_date: true,
+                        video: true,
+                        vote_average: true,
+                        vote_count: true
+                    }).extend({
+                        genre_ids: z.array(z.number()).optional(),
+                        media_type: z.string().optional()
+                    })
+                )
+                .optional()
+        })
+        .optional(),
+    videos: z.object({ results: z.array(TmdbMediaVideoSchema).optional() }).optional()
+});
 export type TmdbMovie = z.infer<typeof TmdbMovieSchema>;
+export type TmdbMovieExtended = z.infer<typeof TmdbMovieExtendedSchema>;

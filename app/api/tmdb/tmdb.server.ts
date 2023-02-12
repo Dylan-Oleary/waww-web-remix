@@ -1,4 +1,5 @@
 import {
+    TmdbCertification,
     TmdbDiscoverMoviesArgs,
     TmdbDiscoverMoviesParamsSchema,
     TmdbDiscoverMoviesResponse,
@@ -8,11 +9,13 @@ import {
     TmdbGetGenresArgs,
     TmdbGetGenresArgsSchema,
     TmdbGetGenresResponse,
+    TmdbGetMovieByIdArgs,
+    TmdbGetMovieByIdArgsSchema,
     TmdbGetWatchProvidersArgs,
     TmdbGetWatchProvidersArgsSchema,
     TmdbGetWatchProvidersResponse,
     TmdbMediumEnum,
-    TmdbMovie,
+    TmdbMovieExtended,
     TmdbRandomMovieArgs,
     TmdbRandomMovieArgsSchema,
     TmdbRandomMovieResponse,
@@ -28,7 +31,7 @@ import {
 } from "@/utils";
 
 import { tmdbCertificationData, tmdbGenreData, tmdbWatchProviderData } from "./stub.server";
-import { TmdbCertification } from "../../schema/types/tmdb/models/TmdbCertification";
+
 const API_KEY = process?.env?.TMDB_API_KEY;
 const BASE_ASSET_URL = process?.env?.TMDB_BASE_ASSET_URL;
 const BASE_URL = process?.env?.TMDB_V3_API_URL;
@@ -115,11 +118,15 @@ export const tmdbApi = {
      * @param id The id used to lookup the movie
      * @see https://developers.themoviedb.org/3/movies/get-movie-details
      */
-    async getMovieById(id: string): Promise<TmdbMovie> {
-        // TODO append_to_response credits, recommendations;
-        return fetch(`${BASE_URL}/movie/${id}?${new URLSearchParams(BASE_URL_PARAMS)}`).then(
-            (res) => res.json()
-        );
+    async getMovieById(id: string, params: TmdbGetMovieByIdArgs = {}): Promise<TmdbMovieExtended> {
+        const mergedParams = withTmdbApiKey(TmdbGetMovieByIdArgsSchema).parse({
+            ...BASE_URL_PARAMS,
+            ...params
+        });
+
+        return fetch(
+            `${BASE_URL}/movie/${id}?${convertObjectToUrlSearchParams(mergedParams)}`
+        ).then((res) => res.json());
     },
     /**
      * Fetches a random list of movies based on the passed filter params

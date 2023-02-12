@@ -1,4 +1,4 @@
-import { TmdbMovie } from "@/schema";
+import { TmdbMovie, TmdbMovieExtended } from "@/schema";
 
 export const mockMovie: TmdbMovie = {
     adult: false,
@@ -59,4 +59,137 @@ export const mockMovie: TmdbMovie = {
     video: false,
     vote_average: 8.036,
     vote_count: 21077
+};
+
+export const mockMovieExtended: TmdbMovieExtended = {
+    ...mockMovie,
+    credits: {
+        cast: [
+            {
+                adult: false,
+                gender: 2,
+                id: 6193,
+                known_for_department: "Acting",
+                name: "Leonardo DiCaprio",
+                original_name: "Leonardo DiCaprio",
+                popularity: 63.305,
+                profile_path: "/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg",
+                cast_id: 428,
+                character: "Jordan Belfort",
+                credit_id: "618978a62f266b002118dd89",
+                order: 0
+            },
+            {
+                adult: false,
+                gender: 2,
+                id: 21007,
+                known_for_department: "Acting",
+                name: "Jonah Hill",
+                original_name: "Jonah Hill",
+                popularity: 33.06,
+                profile_path: "/5aE4GgJADHzN1QsS6zkzElZSEYq.jpg",
+                cast_id: 430,
+                character: "Donnie Azoff",
+                credit_id: "618978c9e741460043941416",
+                order: 1
+            },
+            {
+                adult: false,
+                gender: 1,
+                id: 234352,
+                known_for_department: "Acting",
+                name: "Margot Robbie",
+                original_name: "Margot Robbie",
+                popularity: 58.44,
+                profile_path: "/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
+                cast_id: 429,
+                character: "Naomi Lapaglia",
+                credit_id: "618978b9cf62cd008c7665c8",
+                order: 2
+            },
+            {
+                adult: false,
+                gender: 2,
+                id: 10297,
+                known_for_department: "Acting",
+                name: "Matthew McConaughey",
+                original_name: "Matthew McConaughey",
+                popularity: 16.191,
+                profile_path: "/rUxLWWCDUF8RnDaocSqrVDJ2MS1.jpg",
+                cast_id: 10,
+                character: "Mark Hanna",
+                credit_id: "52fe4a6dc3a36847f81cd4ef",
+                order: 3
+            }
+        ]
+    },
+    recommendations: {
+        page: 1,
+        results: [
+            {
+                adult: false,
+                backdrop_path: "/lVy5Zqcty2NfemqKYbVJfdg44rK.jpg",
+                id: 24,
+                title: "Kill Bill: Vol. 1",
+                original_language: "en",
+                original_title: "Kill Bill: Vol. 1",
+                overview:
+                    "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
+                poster_path: "/v7TaX8kXMXs5yFFGR41guUDNcnB.jpg",
+                media_type: "movie",
+                genre_ids: [18, 53, 9648],
+                popularity: 36.586,
+                release_date: "2003-10-10",
+                video: false,
+                vote_average: 7.97,
+                vote_count: 15471
+            },
+            {
+                adult: false,
+                backdrop_path: "/jqFjgNnxpXIXWuPsyfqmcLXRo9p.jpg",
+                id: 500,
+                title: "Reservoir Dogs",
+                original_language: "en",
+                original_title: "Reservoir Dogs",
+                overview:
+                    "A botched robbery indicates a police informant, and the pressure mounts in the aftermath at a warehouse. Crime begets violence as the survivors -- veteran Mr. White, newcomer Mr. Orange, psychopathic parolee Mr. Blonde, bickering weasel Mr. Pink and Nice Guy Eddie -- unravel.",
+                poster_path: "/xi8Iu6qyTfyZVDVy60raIOYJJmk.jpg",
+                media_type: "movie",
+                genre_ids: [18, 53, 9648],
+                popularity: 34.588,
+                release_date: "1992-09-02",
+                video: false,
+                vote_average: 8.141,
+                vote_count: 12665
+            }
+        ]
+    },
+    videos: {
+        results: [
+            {
+                iso_639_1: "en",
+                iso_3166_1: "US",
+                name: "The Wolf of Wall Street | Official Red Band Trailer (2013) Leonardo DiCaprio, Margot Robbie",
+                key: "mdGQL6v7jtg",
+                site: "YouTube",
+                size: 1080,
+                type: "Trailer",
+                official: false,
+                published_at: "2022-08-20T10:12:54.000Z",
+                id: "630221ca5f4b73008268025c"
+            },
+            {
+                iso_639_1: "en",
+                iso_3166_1: "US",
+                name: "Not Leaving Clip",
+                key: "g07Xxr20L9s",
+                site: "YouTube",
+                size: 720,
+                type: "Clip",
+                official: true,
+                published_at: "2021-11-11T16:59:55.000Z",
+                id: "62731959c74eba0f0f0fca19"
+            }
+        ]
+    }
 };
