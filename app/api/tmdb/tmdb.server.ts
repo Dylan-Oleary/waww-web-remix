@@ -116,6 +116,7 @@ export const tmdbApi = {
      * @see https://developers.themoviedb.org/3/movies/get-movie-details
      */
     async getMovieById(id: string): Promise<TmdbMovie> {
+        // TODO append_to_response credits, recommendations;
         return fetch(`${BASE_URL}/movie/${id}?${new URLSearchParams(BASE_URL_PARAMS)}`).then(
             (res) => res.json()
         );

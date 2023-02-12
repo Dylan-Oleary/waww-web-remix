@@ -1,18 +1,16 @@
 import { z } from "zod";
 
-import {
-    TmdbCollectionSchema,
-    TmdbGenreSchema,
-    TmdbProductionCompanySchema,
-    TmdbProductionCountrySchema,
-    TmdbSpokenLanguageSchema,
-    TmdbStatusEnumSchema
-} from "@/schema";
+import { TmdbCollectionSchema } from "./TmdbCollection";
+import { TmdbGenreSchema } from "./TmdbGenre";
+import { TmdbProductionCompanySchema } from "./TmdbProductionCompany";
+import { TmdbProductionCountrySchema } from "./TmdbProductionCountry";
+import { TmdbSpokenLanguageSchema } from "./TmdbSpokenLanguage";
+import { TmdbStatusEnumSchema } from "./TmdbStatus";
 
 export const TmdbMovieSchema = z.object({
     adult: z.boolean(),
     backdrop_path: z.string().nullable(),
-    belongs_to_collection: TmdbCollectionSchema,
+    belongs_to_collection: TmdbCollectionSchema.nullable(),
     budget: z.number(),
     genres: z.array(TmdbGenreSchema),
     homepage: z.string().nullable(),
@@ -30,6 +28,8 @@ export const TmdbMovieSchema = z.object({
     production_companies: z.array(TmdbProductionCompanySchema),
     production_countries: z.array(TmdbProductionCountrySchema),
     release_date: z.string(),
+    revenue: z.number().optional(),
+    runtime: z.number().optional(),
     spoken_languages: z.array(TmdbSpokenLanguageSchema),
     status: TmdbStatusEnumSchema,
     tagline: z.string().nullable(),

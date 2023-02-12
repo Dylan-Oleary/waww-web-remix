@@ -19,8 +19,11 @@ export const MediaScoreProgress: FC<MediaScorePrgressProps> = ({
     className = "",
     labelClassName = "",
     score = 0,
+    size = 40,
+    thickness = 4,
     ...rest
 }) => {
+    //TODO Make this better re:size/thickness
     const { classes, cx } = useMediaScoreProgressStyles();
     const {
         colors: { green }
@@ -44,8 +47,8 @@ export const MediaScoreProgress: FC<MediaScorePrgressProps> = ({
     return (
         <RingProgress
             className={cx(classes.progressRing, className)}
-            size={40}
-            thickness={4}
+            size={size}
+            thickness={thickness}
             {...valueProps}
             {...rest}
         />
