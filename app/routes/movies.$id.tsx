@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 
-import { Card, MediaScoreProgress, Text } from "@/components";
+import { Card, MediaScoreProgress, MediaStats, Stat, Text } from "@/components";
 import { Stack } from "@/layouts";
 import { singleMovieRouteLoader } from "@/loaders";
 import { DayJsDateFormatEnumSchema } from "@/schema";
@@ -10,6 +10,8 @@ import type { SingleMovieRouteLoaderData } from "@/loaders";
 import { Divider, Grid, Overlay } from "@mantine/core";
 import dayjs from "dayjs";
 
+//TODO - PICTURE SETS FOR POSTERS + BACKDROPS
+//TODO - Mobile Only Info Component
 export { singleMovieRouteLoader as loader };
 export default function Index() {
     const { classes } = useStyles();
@@ -17,6 +19,7 @@ export default function Index() {
     const {
         backdrop_path,
         budget,
+        credits,
         genres = [],
         overview,
         poster_path,
@@ -39,7 +42,7 @@ export default function Index() {
                     }}
                 >
                     <Overlay
-                        gradient={`linear-gradient(to right, rgba(${red},${green},${blue}, 1) 32%, rgba(${red},${green},${blue}, 0) 50%)`}
+                        gradient={`linear-gradient(to right, rgba(${red},${green},${blue}, 1) 20%, rgba(${red},${green},${blue}, 0) 50%)`}
                         opacity={1}
                     />
                     <div className={classes.posterContainer}>
@@ -96,24 +99,18 @@ export default function Index() {
                         ) : null}
                     </div>
                     <div className={classes.mobileHeaderInfo}>
-                        <div>
-                            <Text component="strong">Status</Text>
-                            <Text component="p" m={0}>
-                                {status}
-                            </Text>
-                        </div>
-                        <div>
-                            <Text component="strong">Budget</Text>
-                            <Text component="p" m={0}>
-                                {budget}
-                            </Text>
-                        </div>
-                        <div>
-                            <Text component="strong">Revenue</Text>
-                            <Text component="p" m={0}>
-                                {revenue}
-                            </Text>
-                        </div>
+                        {credits?.crew && credits?.crew.length > 0 ? (
+                            <Grid m={0}>
+                                {credits.crew.map(({ id, job, name }) => (
+                                    <Grid.Col key={`crew_${id}`} px={0} span={6}>
+                                        <Stat label={name} value={job} />
+                                    </Grid.Col>
+                                ))}
+                            </Grid>
+                        ) : null}
+                    </div>
+                    <div className={classes.mobileHeaderInfo}>
+                        <MediaStats budget={budget} revenue={revenue} status={status} />
                     </div>
                 </Stack>
             </Card>
