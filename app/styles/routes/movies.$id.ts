@@ -53,7 +53,7 @@ export const useStyles = createStyles((theme) => ({
         padding: "1rem",
         position: "relative",
         height: "100%",
-        zIndex: 300
+        zIndex: 200
     },
     poster: {
         borderRadius: "0.5rem",

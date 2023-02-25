@@ -2,7 +2,13 @@ import { z } from "zod";
 
 import { ISO_3166_1_Schema } from "../../localization";
 
-export const TmdbMediaVideoTypeEnumSchema = z.enum(["Clip", "Featurette", "Teaser", "Trailer"]);
+export const TmdbMediaVideoTypeEnumSchema = z.enum([
+    "Behind the Scenes",
+    "Clip",
+    "Featurette",
+    "Teaser",
+    "Trailer"
+]);
 export const TmdbMediaVideoSchema = z.object({
     id: z.string(),
     iso_3166_1: ISO_3166_1_Schema,

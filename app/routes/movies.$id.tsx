@@ -1,6 +1,16 @@
 import { useLoaderData } from "@remix-run/react";
+import dayjs from "dayjs";
+import { useState } from "react";
 
-import { Card, MediaScoreProgress, MediaStats, Stat, Text } from "@/components";
+import {
+    Button,
+    Card,
+    MediaScoreProgress,
+    MediaStats,
+    Stat,
+    Text,
+    YouTubeModal
+} from "@/components";
 import { Stack } from "@/layouts";
 import { singleMovieRouteLoader } from "@/loaders";
 import { DayJsDateFormatEnumSchema } from "@/schema";
@@ -8,12 +18,12 @@ import { useStyles } from "@/styles/routes/movies.$id";
 
 import type { SingleMovieRouteLoaderData } from "@/loaders";
 import { Divider, Grid, Overlay } from "@mantine/core";
-import dayjs from "dayjs";
 
 //TODO - PICTURE SETS FOR POSTERS + BACKDROPS
 //TODO - Mobile Only Info Component
 export { singleMovieRouteLoader as loader };
 export default function Index() {
+    const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState<boolean>(true);
     const { classes } = useStyles();
     const { movie, posterPrimaryColor } = useLoaderData<SingleMovieRouteLoaderData>();
     const {
@@ -30,6 +40,7 @@ export default function Index() {
         title,
         vote_average
     } = movie;
+    const trailer = movie?.videos?.results?.[0];
     const { red, blue, green } = posterPrimaryColor;
 
     return (
@@ -75,7 +86,11 @@ export default function Index() {
                             <Divider className={classes.divider} size={2} orientation="vertical" />
                         </Grid.Col>
                         <Grid.Col span={4} className={classes.mobileScoreColumn}>
-                            <Text>Play Trailer</Text>
+                            {trailer ? (
+                                <Button onClick={() => setIsYouTubeModalOpen(true)}>
+                                    Play Trailer
+                                </Button>
+                            ) : null}
                         </Grid.Col>
                     </Grid>
                     <div className={classes.mobileGenreWrapper}>
@@ -114,6 +129,19 @@ export default function Index() {
                     </div>
                 </Stack>
             </Card>
+            {/* Modals */}
+            {trailer ? (
+                <YouTubeModal
+                    centered
+                    iFrameProps={{
+                        autoPlay: true,
+                        name: "Media Trailer",
+                        videoId: trailer.key
+                    }}
+                    onClose={() => setIsYouTubeModalOpen(false)}
+                    opened={isYouTubeModalOpen}
+                />
+            ) : null}
         </div>
     );
 }

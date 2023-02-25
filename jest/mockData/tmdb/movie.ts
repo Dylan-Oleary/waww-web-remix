@@ -1,4 +1,4 @@
-import { TmdbMovie, TmdbMovieExtended } from "@/schema";
+import type { TmdbMediaVideo, TmdbMovie, TmdbMovieExtended } from "@/schema";
 
 export const mockMovie: TmdbMovie = {
     adult: false,
@@ -60,6 +60,81 @@ export const mockMovie: TmdbMovie = {
     vote_average: 8.036,
     vote_count: 21077
 };
+
+export const mockMovieVideos: TmdbMediaVideo[] = [
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "The Dream Sequence",
+        key: "mpj9dL7swwk",
+        site: "YouTube",
+        size: 720,
+        type: "Clip",
+        official: true,
+        published_at: "2022-03-09T01:00:20.000Z",
+        id: "622d5cc322931a00454e588c"
+    },
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "Christopher Nolan & Leonardo DiCaprio on Inception | Film4 Interview Special Archives",
+        key: "SBmxYERafeU",
+        site: "YouTube",
+        size: 1080,
+        type: "Featurette",
+        official: true,
+        published_at: "2020-02-07T10:45:20.000Z",
+        id: "623305b4109cd0001bc00bf7"
+    },
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "An Extended Special Look",
+        key: "Fl7KyyKqqhE",
+        site: "YouTube",
+        size: 1080,
+        type: "Behind the Scenes",
+        official: true,
+        published_at: "2011-02-08T17:47:26.000Z",
+        id: "622c387fd363e50070d0d2c7"
+    },
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "TV Spot #9",
+        key: "HO5v3RhO8ek",
+        site: "YouTube",
+        size: 720,
+        type: "Teaser",
+        official: true,
+        published_at: "2010-06-29T23:22:58.000Z",
+        id: "622c3a1d069f0e00463cde5d"
+    },
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "Official New UK Trailer",
+        key: "JE9z-gy4De4",
+        site: "YouTube",
+        size: 1080,
+        type: "Trailer",
+        official: true,
+        published_at: "2010-05-11T15:00:54.000Z",
+        id: "638cadf5c3aa3f0084cd2074"
+    },
+    {
+        iso_639_1: "en",
+        iso_3166_1: "US",
+        name: "Official Trailer",
+        key: "Jvurpf91omw",
+        published_at: "2010-01-09T00:34:42.000Z",
+        site: "YouTube",
+        size: 1080,
+        type: "Trailer",
+        official: true,
+        id: "574bc2099251417fc0000c4d"
+    }
+];
 
 export const mockMovieExtended: TmdbMovieExtended = {
     ...mockMovie,
@@ -192,32 +267,5 @@ export const mockMovieExtended: TmdbMovieExtended = {
             }
         ]
     },
-    videos: {
-        results: [
-            {
-                iso_639_1: "en",
-                iso_3166_1: "US",
-                name: "The Wolf of Wall Street | Official Red Band Trailer (2013) Leonardo DiCaprio, Margot Robbie",
-                key: "mdGQL6v7jtg",
-                site: "YouTube",
-                size: 1080,
-                type: "Trailer",
-                official: false,
-                published_at: "2022-08-20T10:12:54.000Z",
-                id: "630221ca5f4b73008268025c"
-            },
-            {
-                iso_639_1: "en",
-                iso_3166_1: "US",
-                name: "Not Leaving Clip",
-                key: "g07Xxr20L9s",
-                site: "YouTube",
-                size: 720,
-                type: "Clip",
-                official: true,
-                published_at: "2021-11-11T16:59:55.000Z",
-                id: "62731959c74eba0f0f0fca19"
-            }
-        ]
-    }
+    videos: { results: mockMovieVideos }
 };
