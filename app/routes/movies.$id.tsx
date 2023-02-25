@@ -19,20 +19,16 @@ import { useStyles } from "@/styles/routes/movies.$id";
 import type { SingleMovieRouteLoaderData } from "@/loaders";
 import { Divider, Grid, Overlay } from "@mantine/core";
 
-//TODO - PICTURE SETS FOR POSTERS + BACKDROPS
 //TODO - Mobile Only Info Component
 export { singleMovieRouteLoader as loader };
 export default function Index() {
-    const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState<boolean>(true);
-    const { classes } = useStyles();
-    const { movie, posterPrimaryColor } = useLoaderData<SingleMovieRouteLoaderData>();
+    const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState<boolean>(false);
+    const { media, movie, posterPrimaryColor } = useLoaderData<SingleMovieRouteLoaderData>();
     const {
-        backdrop_path,
         budget,
         credits,
         genres = [],
         overview,
-        poster_path,
         release_date,
         revenue,
         status,
@@ -41,17 +37,14 @@ export default function Index() {
         vote_average
     } = movie;
     const trailer = movie?.videos?.results?.[0];
+    const { backgroundImageProps, posterImgProps } = media;
+    const { classes } = useStyles(backgroundImageProps);
     const { red, blue, green } = posterPrimaryColor;
 
     return (
         <div className={classes.container}>
             <Card childContainerClassName={classes.card}>
-                <div
-                    className={classes.mediaHeader}
-                    style={{
-                        backgroundImage: `url(https://image.tmdb.org/t/p/w500${backdrop_path})`
-                    }}
-                >
+                <div className={classes.backdrop}>
                     <Overlay
                         gradient={`linear-gradient(to right, rgba(${red},${green},${blue}, 1) 20%, rgba(${red},${green},${blue}, 0) 50%)`}
                         opacity={1}
@@ -60,11 +53,11 @@ export default function Index() {
                         <img
                             alt={`Poster for ${title}`}
                             className={classes.poster}
-                            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                            {...posterImgProps}
                         />
                     </div>
                 </div>
-                <Stack>
+                <Stack pt={8}>
                     <div>
                         <Text align="center" className={classes.mobileTitle} component="h2">
                             {title}
@@ -74,7 +67,7 @@ export default function Index() {
                         </Text>
                     </div>
                     <Grid className={classes.mobileScoreRow}>
-                        <Grid.Col span={4} className={classes.mobileScoreColumn}>
+                        <Grid.Col span={trailer ? 4 : 12} className={classes.mobileScoreColumn}>
                             <MediaScoreProgress
                                 className={classes.ringScore}
                                 score={vote_average}
@@ -82,16 +75,24 @@ export default function Index() {
                             />
                             <Text ml={4}>User Score</Text>
                         </Grid.Col>
-                        <Grid.Col className={classes.mobileScoreColumn} span={4}>
-                            <Divider className={classes.divider} size={2} orientation="vertical" />
-                        </Grid.Col>
-                        <Grid.Col span={4} className={classes.mobileScoreColumn}>
-                            {trailer ? (
-                                <Button onClick={() => setIsYouTubeModalOpen(true)}>
-                                    Play Trailer
-                                </Button>
-                            ) : null}
-                        </Grid.Col>
+                        {trailer ? (
+                            <>
+                                <Grid.Col className={classes.mobileScoreColumn} span={4}>
+                                    <Divider
+                                        className={classes.divider}
+                                        size={2}
+                                        orientation="vertical"
+                                    />
+                                </Grid.Col>
+                                <Grid.Col span={4} className={classes.mobileScoreColumn}>
+                                    {trailer ? (
+                                        <Button onClick={() => setIsYouTubeModalOpen(true)}>
+                                            Play Trailer
+                                        </Button>
+                                    ) : null}
+                                </Grid.Col>
+                            </>
+                        ) : null}
                     </Grid>
                     <div className={classes.mobileGenreWrapper}>
                         <Text>{genres.map(({ name }) => name).join(", ")}</Text>

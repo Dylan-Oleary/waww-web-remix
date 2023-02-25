@@ -1,6 +1,7 @@
 export * from "./TmdbCastMember";
 export * from "./TmdbCertification";
 export * from "./TmdbCollection";
+export * from "./TmdbConfiguration";
 export * from "./TmdbCrewMember";
 export * from "./TmdbGenre";
 export * from "./TmdbMediaVideo";

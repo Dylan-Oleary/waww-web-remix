@@ -89,6 +89,16 @@ export const tmdbApi = {
         //     );
     },
     /**
+     * Fetches system wide configuration information
+     *
+     * @see https://developers.themoviedb.org/3/configuration/get-api-configuration
+     */
+    async getConfiguration() {
+        return fetch(
+            `${BASE_URL}/configuration?${convertObjectToUrlSearchParams(BASE_URL_PARAMS)}`
+        ).then((res) => res.json());
+    },
+    /**
      * Fetches a list of all genres present in the TMDB system
      *
      * @param params Parameters to fetch the desired genres
