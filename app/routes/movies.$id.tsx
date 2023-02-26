@@ -18,11 +18,29 @@ import { singleMovieRouteLoader } from "@/loaders";
 import { DayJsDateFormatEnumSchema } from "@/schema";
 import { useStyles } from "@/styles/routes/movies.$id";
 
+import type { MetaFunction } from "@remix-run/node";
 import type { SingleMovieRouteLoaderData } from "@/loaders";
 
-//TODO - METADATA
 //TODO - Add watch providers
 //TODO - Mobile Only Info Component
+export type SingleMovieRouteMetaArgs = {
+    data: SingleMovieRouteLoaderData;
+};
+
+export const meta: MetaFunction<typeof singleMovieRouteLoader> = (
+    args: SingleMovieRouteMetaArgs
+) => {
+    const {
+        data: { movie }
+    } = args;
+    const { overview: description, release_date, title: movieTitle } = movie;
+    const title = `${movieTitle} (${dayjs(release_date).format(
+        DayJsDateFormatEnumSchema.Enum["YYYY"]
+    )})`;
+
+    return { description, title };
+};
+
 export { singleMovieRouteLoader as loader };
 export default function Index() {
     const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState<boolean>(false);
