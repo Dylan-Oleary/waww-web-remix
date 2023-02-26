@@ -5,25 +5,29 @@ import { useState } from "react";
 import {
     Button,
     Card,
+    Divider,
+    MediaHeader,
     MediaScoreProgress,
     MediaStats,
     Stat,
     Text,
     YouTubeModal
 } from "@/components";
-import { Stack } from "@/layouts";
+import { Grid, Stack } from "@/layouts";
 import { singleMovieRouteLoader } from "@/loaders";
 import { DayJsDateFormatEnumSchema } from "@/schema";
 import { useStyles } from "@/styles/routes/movies.$id";
 
 import type { SingleMovieRouteLoaderData } from "@/loaders";
-import { Divider, Grid, Overlay } from "@mantine/core";
 
+//TODO - METADATA
+//TODO - Add watch providers
 //TODO - Mobile Only Info Component
 export { singleMovieRouteLoader as loader };
 export default function Index() {
     const [isYouTubeModalOpen, setIsYouTubeModalOpen] = useState<boolean>(false);
-    const { media, movie, posterPrimaryColor } = useLoaderData<SingleMovieRouteLoaderData>();
+    const { classes } = useStyles();
+    const { assets, movie } = useLoaderData<SingleMovieRouteLoaderData>();
     const {
         budget,
         credits,
@@ -37,26 +41,11 @@ export default function Index() {
         vote_average
     } = movie;
     const trailer = movie?.videos?.results?.[0];
-    const { backgroundImageProps, posterImgProps } = media;
-    const { classes } = useStyles(backgroundImageProps);
-    const { red, blue, green } = posterPrimaryColor;
 
     return (
         <div className={classes.container}>
             <Card childContainerClassName={classes.card}>
-                <div className={classes.backdrop}>
-                    <Overlay
-                        gradient={`linear-gradient(to right, rgba(${red},${green},${blue}, 1) 20%, rgba(${red},${green},${blue}, 0) 50%)`}
-                        opacity={1}
-                    />
-                    <div className={classes.posterContainer}>
-                        <img
-                            alt={`Poster for ${title}`}
-                            className={classes.poster}
-                            {...posterImgProps}
-                        />
-                    </div>
-                </div>
+                <MediaHeader assets={assets} media={movie} />
                 <Stack pt={8}>
                     <div>
                         <Text align="center" className={classes.mobileTitle} component="h2">
@@ -73,7 +62,6 @@ export default function Index() {
                                 score={vote_average}
                                 size={55}
                             />
-                            <Text ml={4}>User Score</Text>
                         </Grid.Col>
                         {trailer ? (
                             <>

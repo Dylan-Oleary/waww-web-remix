@@ -1,5 +1,4 @@
 import { json } from "@remix-run/node";
-import { getAverageColor } from "fast-average-color-node";
 
 import {
     buildSingleMoviePageBackdropImage,
@@ -16,28 +15,24 @@ import type { ResponsiveBackgroundImageSizeProps, ResponsiveImageSizeProps } fro
 import { mockMovieExtended } from "jest/mockData/tmdb";
 
 export type SingleMovieRouteLoaderData = {
-    media: {
-        backgroundImageProps: ResponsiveBackgroundImageSizeProps;
-        posterImgProps: ResponsiveImageSizeProps;
+    assets: {
+        backgroundImage: ResponsiveBackgroundImageSizeProps;
+        posterImage: ResponsiveImageSizeProps;
     };
     movie: TmdbMovieExtended;
-    posterPrimaryColor: {
-        red: number;
-        green: number;
-        blue: number;
-    };
 };
 
 export const singleMovieRouteLoader: LoaderFunction = async ({ params }) => {
     const { id } = params;
-    const movie = await tmdbApi.getMovieById(String(id), {
-        append_to_response: "credits,recommendations,videos"
-    });
-    // const movie = { ...mockMovieExtended };
+    // const movie = await tmdbApi.getMovieById(String(id), {
+    //     append_to_response: "credits,recommendations,videos"
+    // });
+    const movie = { ...mockMovieExtended };
 
     // Return only top-billed cast and crew
     movie.credits = {
         cast: (movie?.credits?.cast ?? []).splice(0, 6),
+        //TODO - sort by order
         crew: getUniqueCrew(movie?.credits?.crew ?? [], 4)
     };
 
@@ -48,17 +43,13 @@ export const singleMovieRouteLoader: LoaderFunction = async ({ params }) => {
 
     //TODO - Recommendations Filtered
 
-    const { value } = await getAverageColor(`https://image.tmdb.org/t/p/w200${movie.poster_path}`);
-    const [red, green, blue] = value;
-
     return json<SingleMovieRouteLoaderData>({
         movie,
-        media: {
+        assets: {
             //@ts-ignore
-            backgroundImageProps: buildSingleMoviePageBackdropImage(movie?.backdrop_path ?? ""),
+            backgroundImage: buildSingleMoviePageBackdropImage(movie?.backdrop_path ?? ""),
             //@ts-ignore
-            posterImgProps: buildSingleMoviePageResponsiveImage(movie?.poster_path ?? "")
-        },
-        posterPrimaryColor: { red, green, blue }
+            posterImage: buildSingleMoviePageResponsiveImage(movie?.poster_path ?? "")
+        }
     });
 };

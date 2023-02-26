@@ -5,6 +5,16 @@ export const formatCurrency = (value: number): string =>
         style: "currency"
     }).format(value);
 
+export const formatRuntime = (runtime: number): string => {
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+
+    const formattedHours = hours > 0 ? `${hours}h ` : "";
+    const formattedMinutes = minutes > 0 ? `${minutes}m` : "";
+
+    return `${formattedHours}${formattedMinutes}`;
+};
+
 export const getRandomKeyValuePairFromObject = (
     obj: Record<string, unknown>
 ): [string, unknown] => {

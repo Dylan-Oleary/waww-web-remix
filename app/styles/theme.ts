@@ -1,6 +1,7 @@
 import type { MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
+    black: "#212427",
     breakpoints: {
         sm: 640,
         md: 768,
@@ -35,6 +36,7 @@ export const theme: MantineThemeOverride = {
     },
     fontFamily: "Poppins, sans-serif",
     headings: { fontFamily: "Poppins, sans-serif" },
+    lineHeight: "1.33",
     primaryColor: "primary",
     white: "#F6F4F3",
     globalStyles: (theme) => ({
